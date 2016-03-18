@@ -22,17 +22,18 @@ public class OfferItem {
 	private Item product;
 	private int quantity;
 	private BigDecimal totalCost;
-	private Money currency;
 	private Discount discount;
+	private Money currency;
 
 	public OfferItem(Item product, int quantity) {
-		this(product, quantity, null, null);
+		this(product, quantity, null, null, null);
 	}
 
-	public OfferItem(Item product, int quantity, Discount discount, String discountCause) {
+	public OfferItem(Item product, int quantity, Discount discount, String discountCause, Money currency) {
 		this.product = product;
 		this.quantity = quantity;
 		this.discount = discount;
+		this.currency = currency;
 
 		BigDecimal discountValue = new BigDecimal(0);
 		if (discount != null)
