@@ -20,31 +20,23 @@ import java.math.BigDecimal;
 public class OfferItem {
 
 	private Item product;
-
 	private int quantity;
-
 	private BigDecimal totalCost;
-
 	private String currency;
-
-	// discount
-	private String discountCause;
-
-	private BigDecimal discount;
+	private Discount discount;
 
 	public OfferItem(Item product, int quantity) {
 		this(product, quantity, null, null);
 	}
 
-	public OfferItem(Item product, int quantity, BigDecimal discount, String discountCause) {
+	public OfferItem(Item product, int quantity, Discount discount, String discountCause) {
 		this.product = product;
 		this.quantity = quantity;
 		this.discount = discount;
-		this.discountCause = discountCause;
 
 		BigDecimal discountValue = new BigDecimal(0);
 		if (discount != null)
-			discountValue = discountValue.subtract(discount);
+			discountValue = discountValue.subtract(discount.getDiscount());
 
 		this.totalCost = product.getProductPrice().multiply(new BigDecimal(quantity)).subtract(discountValue);
 	}
@@ -65,12 +57,8 @@ public class OfferItem {
 		return currency;
 	}
 
-	public BigDecimal getDiscount() {
+	public Discount getDiscount() {
 		return discount;
-	}
-
-	public String getDiscountCause() {
-		return discountCause;
 	}
 
 	public int getQuantity() {
@@ -83,7 +71,6 @@ public class OfferItem {
 		int result = 1;
 		result = prime * result + ((currency == null) ? 0 : currency.hashCode());
 		result = prime * result + ((discount == null) ? 0 : discount.hashCode());
-		result = prime * result + ((discountCause == null) ? 0 : discountCause.hashCode());
 		result = prime * result + ((product == null) ? 0 : product.hashCode());
 		result = prime * result + quantity;
 		result = prime * result + ((totalCost == null) ? 0 : totalCost.hashCode());
@@ -109,11 +96,6 @@ public class OfferItem {
 				return false;
 		} else if (!discount.equals(other.discount))
 			return false;
-		if (discountCause == null) {
-			if (other.discountCause != null)
-				return false;
-		} else if (!discountCause.equals(other.discountCause))
-			return false;
 		if (product == null) {
 			if (other.product != null)
 				return false;
@@ -132,8 +114,7 @@ public class OfferItem {
 	/**
 	 * 
 	 * @param item
-	 * @param delta
-	 *            acceptable percentage difference
+	 * @param delta acceptable percentage difference
 	 * @return
 	 */
 	public boolean sameAs(OfferItem other, double delta) {
