@@ -7,11 +7,13 @@ public class Discount {
 	private String discountId;
 	private String discountCause;
 	private BigDecimal discount;
+	private Money currency;
 	
-	public Discount(String discountId, String discountCause, BigDecimal discount) {
+	public Discount(String discountId, String discountCause, BigDecimal discount, Money currency) {
 		this.discountId = discountId;
 		this.discountCause = discountCause;
 		this.discount = discount;
+		this.currency = currency;
 	}
 
 	public String getDiscountId() {
@@ -26,10 +28,15 @@ public class Discount {
 		return discount;
 	}
 
+	public Money getCurrency() {
+		return currency;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((currency == null) ? 0 : currency.hashCode());
 		result = prime * result + ((discount == null) ? 0 : discount.hashCode());
 		result = prime * result + ((discountCause == null) ? 0 : discountCause.hashCode());
 		result = prime * result + ((discountId == null) ? 0 : discountId.hashCode());
@@ -45,6 +52,11 @@ public class Discount {
 		if (getClass() != obj.getClass())
 			return false;
 		Discount other = (Discount) obj;
+		if (currency == null) {
+			if (other.currency != null)
+				return false;
+		} else if (!currency.equals(other.currency))
+			return false;
 		if (discount == null) {
 			if (other.discount != null)
 				return false;

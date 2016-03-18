@@ -10,14 +10,16 @@ public class Item {
 	private String productName;
 	private Date productSnapshotDate;
 	private String productType;
-
+	private Money currency;
+	
 	public Item(String productId, BigDecimal productPrice, String productName, Date productSnapshotDate,
-			String productType) {
+			String productType, Money currency) {
 		this.productId = productId;
 		this.productPrice = productPrice;
 		this.productName = productName;
 		this.productSnapshotDate = productSnapshotDate;
 		this.productType = productType;
+		this.currency = currency;
 	}
 
 	public String getProductId() {
@@ -40,10 +42,15 @@ public class Item {
 		return productType;
 	}
 
+	public Money getCurrency() {
+		return currency;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((currency == null) ? 0 : currency.hashCode());
 		result = prime * result + ((productId == null) ? 0 : productId.hashCode());
 		result = prime * result + ((productName == null) ? 0 : productName.hashCode());
 		result = prime * result + ((productPrice == null) ? 0 : productPrice.hashCode());
@@ -61,6 +68,11 @@ public class Item {
 		if (getClass() != obj.getClass())
 			return false;
 		Item other = (Item) obj;
+		if (currency == null) {
+			if (other.currency != null)
+				return false;
+		} else if (!currency.equals(other.currency))
+			return false;
 		if (productId == null) {
 			if (other.productId != null)
 				return false;
@@ -88,4 +100,5 @@ public class Item {
 			return false;
 		return true;
 	}
+
 }

@@ -22,7 +22,7 @@ public class OfferItem {
 	private Item product;
 	private int quantity;
 	private BigDecimal totalCost;
-	private String currency;
+	private Money currency;
 	private Discount discount;
 
 	public OfferItem(Item product, int quantity) {
@@ -53,7 +53,7 @@ public class OfferItem {
 		return totalCost;
 	}
 
-	public String getTotalCostCurrency() {
+	public Money getCurrency() {
 		return currency;
 	}
 
